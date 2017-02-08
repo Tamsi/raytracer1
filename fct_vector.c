@@ -38,7 +38,7 @@ float vectorDot(sfvector3f vector1, sfvector3f vector2)
 	return (result);
 }
 
-sfvector3f vectorDot(sfvector3f vector, float sclaire)
+sfvector3f scal_vector(sfvector3f vector, float sclaire)
 {
 	sfvector3f result;
 
