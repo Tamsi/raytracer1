@@ -18,6 +18,8 @@
 #define HEIGHT 800
 #define WIDTH 600
 
+sfVector2i screenSize;
+
 typedef struct s_my_framebuffer
 {
   sfUint8 *pixels;
@@ -33,8 +35,8 @@ typedef struct s_ray
 
 typedef struct s_sphere
 {
-	sfVector2f rayon;
-	sfVector2f pos;
+	float rayon;
+	sfVector3f pos;
 }t_sphere;
 
 typedef struct s_plan

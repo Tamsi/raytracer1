@@ -20,11 +20,38 @@ sfVector3f raytrace(sfVector2i screenSize, sfVector2i screenPos)
 
 float intersectRaySphere(sfVector3f eye_pos, sfVector3f dir_vector, float radius)
 {
-	float sphere;
-	sfVector3f position;
+	sfVector3f equation;
+	float k;
+	float disc;
 
-	position.x = eye_pos.x + scal_vector(dir_vector.x, radius);
-	position.y = eye_pos.y + scal_vector(dir_vector.y, radius);
-	position.z = eye_pos.z + scal_vector(dir_vector.z, radius);
-	sphere = sqrtf(position.x * position.x + position.y * position.y + position.z * position.z);
+	equation.x = (dir_vector.x * dir_vector.x) + (dir_vector.y * dir_vector.y) + (dir_vector.z * dir_vector.z);
+	equation.y = 2 * (eye_pos.x * dir_vector.x + eye_pos.y * dir_vector.y + eye_pos.z * dir_vector.z);
+	equation.z = (eye_pos.x * eye_pos.x) + (eye_pos.y * eye_pos.y) + (eye_pos.z * eye_pos.z) - (radius * radius);
+	disc = (equation.y * equation.y) - 4 * equation.x * equation.y;
+	if (disc < 0)
+		return (0.0);
+	else if (disc == 0)
+		k = -(equation.y)/(2 * equation.x);
+	else
+		k = (-1 * equation.y + sqrtf(disc)) / (2 * equation.x);
+	return (k);
+}
+
+int main(int ac, char **av)
+{
+	t_sphere sphere;
+	sfVector3f eye;
+
+	screenSize.x = WIDTH;
+	screenSize.y = HEIGHT;
+	sphere.pos.x = 0;
+	sphere.pos.y = 0;
+	sphere.pos.z = 0;
+	sphere.radius = 50;
+
+	eye.x = -200;
+	eye.x = 0;
+	eye.x = 0;
+	intersectRaySphere(eye, sphere.pos, sphere.rayon);
+	raytrace(screenSize, ...);
 }
