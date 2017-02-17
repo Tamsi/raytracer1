@@ -5,14 +5,15 @@
 ** Login   <tbesson@epitech.net>
 ** 
 ** Started on  Wed Feb  8 16:24:24 2017 Tamsi Besson
-** Last update Wed Feb  8 16:25:31 2017 Tamsi Besson
+** Last update Fri Feb 17 13:05:12 2017 Tamsi Besson
 */
 
 #include "inc/my.h"
 
 sfVector3f raytrace(sfVector2i screenSize, sfVector2i screenPos)
 {
-  sfVector3f direction
+  sfVector3f direction;
+
   direction.x = (WIDTH / 2) - screenPos.x;
   direction.y = (HEIGHT / 2) - screenPos.y;
   return (direction);
@@ -37,21 +38,103 @@ float intersectRaySphere(sfVector3f eye_pos, sfVector3f dir_vector, float radius
 	return (k);
 }
 
-int main(int ac, char **av)
+t_my_framebuffer *create_pixel_buffer(int width, int height)
 {
-	t_sphere sphere;
-	sfVector3f eye;
+  int i;
+  sfUint8* pixels;
+  t_my_framebuffer *pixelbuffer;
 
-	screenSize.x = WIDTH;
-	screenSize.y = HEIGHT;
-	sphere.pos.x = 0;
-	sphere.pos.y = 0;
-	sphere.pos.z = 0;
-	sphere.radius = 50;
+  pixels = malloc(width * height * 4 * sizeof(*pixels));
+  pixelbuffer = malloc(width * height * 4 * sizeof(*pixelbuffer));
+  if (pixels == NULL)
+    exit(EXIT_FAILURE);
+  i = 0;
+  while (i < width * height * 4)
+    {
+      pixels[i] = 0;
+      i = i + 1;
+    }
+  pixelbuffer->pixels = pixels;
+  pixelbuffer->height = height;
+  pixelbuffer->width = width;
+  return (pixelbuffer);
+}
 
-	eye.x = -200;
-	eye.x = 0;
-	eye.x = 0;
-	intersectRaySphere(eye, sphere.pos, sphere.rayon);
-	raytrace(screenSize, ...);
+int process_game_loop(sfRenderWindow *window, sfSprite *sprite)
+{
+  sfEvent event;
+
+  while (sfRenderWindow_isOpen(window))
+  {
+    while (sfRenderWindow_pollEvent(window, &event))
+    {
+  	  if (event.type == sfEvtClosed)
+  	    sfRenderWindow_close(window);
+    }
+    sfRenderWindow_clear(window, sfBlack);
+    sfRenderWindow_drawSprite(window, sprite, NULL);
+    sfRenderWindow_display(window);
+  }
+}
+
+void raytrace_scene(t_my_framebuffer *framebuffer)
+{
+  t_sphere sphere;
+  sfVector3f eye;
+  sfVector3f direction;
+  float k;
+
+  sphere.pos.x = 0;
+  sphere.pos.y = 0;
+  sphere.pos.z = 0;
+  sphere.rayon = 50;
+  eye.x = -200;
+  eye.x = 0;
+  eye.x = 0;
+
+  screenPos.y = 0;
+  while (screenPos.y < WIDTH)
+  {
+    screenPos.x = 0;
+    while (screenPos.x < HEIGHT)
+    {
+      direction = raytrace(screenSize, screenPos);
+      k = intersectRaySphere(eye, direction, sphere.rayon);
+      //if (k != 0.0)
+      //my_put_pixel(framebuffer, screenPos.x, screenPos.y, sfRed);
+      screenPos.x++;
+    }
+    screenPos.y++;
+  }
+}
+
+int main()
+{
+  sfVideoMode mode = {FRAMEBUFFER_WIDTH, FRAMEBUFFER_HEIGHT, 32};
+  sfRenderWindow* window;
+  sfTexture* texture;
+  sfSprite* sprite;
+
+  t_my_framebuffer* framebuffer;
+
+  window = sfRenderWindow_create(mode, "Bootstrap Raytracer 1",
+         sfResize | sfClose, NULL);
+  if (!window)
+    return (EXIT_FAILURE);
+  texture = sfTexture_create(FRAMEBUFFER_WIDTH, FRAMEBUFFER_HEIGHT);
+  if (!texture)
+    return (EXIT_FAILURE);
+  sprite = sfSprite_create();
+  sfSprite_setTexture(sprite, texture, sfTrue);
+
+  framebuffer = create_pixel_buffer(FRAMEBUFFER_WIDTH, FRAMEBUFFER_HEIGHT);
+  raytrace_scene(framebuffer);  
+  sfTexture_updateFromPixels(texture, framebuffer->pixels,
+           framebuffer->width, framebuffer->height,
+           0,0);
+  process_game_loop(window, sprite);
+  sfSprite_destroy(sprite);
+  sfTexture_destroy(texture);
+  sfRenderWindow_destroy(window);
+  return (EXIT_SUCCESS);
 }

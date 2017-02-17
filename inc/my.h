@@ -12,13 +12,17 @@
 #define MY_H
 #include <SFML/Audio.h>
 #include <SFML/Graphics.h>
+#include <SFML/System/Vector3.h>
 #include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
-#define HEIGHT 800
-#define WIDTH 600
+#define HEIGHT 600
+#define WIDTH 800
+#define FRAMEBUFFER_HEIGHT 600
+#define FRAMEBUFFER_WIDTH 800
 
 sfVector2i screenSize;
+sfVector2i screenPos;
 
 typedef struct s_my_framebuffer
 {
@@ -63,7 +67,7 @@ typedef struct s_cylinder
 	sfVector2i height;
 	sfVector2f pos;
 	sfVector2i rayon_base;
-}t_cone;
+}t_cylinder;
 
 void	my_put_pixel(t_my_framebuffer *, int, int, sfColor);
 sfVector3f raytrace (sfVector2i, sfVector2i);
