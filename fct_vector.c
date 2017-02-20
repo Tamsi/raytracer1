@@ -10,7 +10,7 @@
 
 #include "inc/my.h"
 
-sfVector3f vector_sum(sfVector3f vector1, sfVector3f vector2)
+/*sfVector3f vector_sum(sfVector3f vector1, sfVector3f vector2)
 {
   sfVector3f result;
 
@@ -47,3 +47,4 @@ sfVector3f scal_vector(sfVector3f vector, float sclaire)
   result.z = sclaire * vector.z;
   return (result);
 }
+*/
