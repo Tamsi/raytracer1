@@ -21,9 +21,6 @@
 #define FRAMEBUFFER_HEIGHT 600
 #define FRAMEBUFFER_WIDTH 800
 
-sfVector2i screenSize;
-sfVector2i screenPos;
-
 typedef struct s_my_framebuffer
 {
   sfUint8 *pixels;

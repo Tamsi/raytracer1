@@ -10,9 +10,9 @@
 
 #include "inc/my.h"
 
-/*sfvector3f vector_sum(sfvector3f vector1, sfvector3f vector2)
+sfVector3f vector_sum(sfVector3f vector1, sfVector3f vector2)
 {
-  sfvector3f result;
+  sfVector3f result;
 
   result.x = vector1.x + vector2.x;
   result.y = vector1.y + vector2.y;
@@ -20,9 +20,9 @@
   return (result);
 }
 
-sfvector3f vector_sub(sfvector3f vector1, sfvector3f vector2)
+sfVector3f vector_sub(sfVector3f vector1, sfVector3f vector2)
 {
-  sfvector3f result;
+  sfVector3f result;
 
   result.x = vector1.x - vector2.x;
   result.y = vector1.y - vector2.y;
@@ -30,7 +30,7 @@ sfvector3f vector_sub(sfvector3f vector1, sfvector3f vector2)
   return (result);
 }
 
-float vectorDot(sfvector3f vector1, sfvector3f vector2)
+float vectorDot(sfVector3f vector1, sfVector3f vector2)
 {
   float result;
 
@@ -38,13 +38,12 @@ float vectorDot(sfvector3f vector1, sfvector3f vector2)
   return (result);
 }
 
-sfvector3f scal_vector(sfvector3f vector, float sclaire)
+sfVector3f scal_vector(sfVector3f vector, float sclaire)
 {
-  sfvector3f result;
+  sfVector3f result;
 
   result.x = sclaire * vector.x;
   result.y = sclaire * vector.y;
   result.z = sclaire * vector.z;
   return (result);
 }
-*/
