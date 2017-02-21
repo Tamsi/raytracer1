@@ -131,8 +131,8 @@ int main()
   sfSprite_setTexture(sprite, texture, sfTrue);
   framebuffer = create_pixel_buffer(FRAMEBUFFER_WIDTH, FRAMEBUFFER_HEIGHT);
   raytrace_scene(framebuffer);
-  process_game_loop(window, sprite);
   sfTexture_updateFromPixels(texture, framebuffer->pixels, framebuffer->width, framebuffer->height, 0, 0);
+  process_game_loop(window, sprite);
   sfSprite_destroy(sprite);
   sfTexture_destroy(texture);
   sfRenderWindow_destroy(window);
