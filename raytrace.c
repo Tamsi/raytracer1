@@ -52,15 +52,14 @@ float intersect_sphere(sfVector3f eye_pos, sfVector3f dir_vector, float radius)
 
   a = dir_vector.x * dir_vector.x + dir_vector.y * dir_vector.y + dir_vector.z * dir_vector.z;
   b = 2 * (eye_pos.x * dir_vector.x + eye_pos.y * dir_vector.y + eye_pos.z * dir_vector.z);
-  c = eye_pos.x * eye_pos.x + eye_pos.y * eye_pos.y + eye_pos.z * eye_pos.z + radius * radius;
-  disc = b * b + 4 * a * c;
+  c = eye_pos.x * eye_pos.x + eye_pos.y * eye_pos.y + eye_pos.z * eye_pos.z - radius * radius;
+  disc = b * b - 4 * a * c;
   if (disc < 0)
     res = 0.0;
   else if (disc == 0)
     res = -b / (2 * a);
   else
     res = (-b + sqrtf(disc)) / (2 * a);
-  printf("float = %f\n", res);
   return (res);
 }
 
@@ -131,8 +130,8 @@ int main()
   sprite = sfSprite_create();
   sfSprite_setTexture(sprite, texture, sfTrue);
   framebuffer = create_pixel_buffer(FRAMEBUFFER_WIDTH, FRAMEBUFFER_HEIGHT);
-  process_game_loop(window, sprite);
   raytrace_scene(framebuffer);
+  process_game_loop(window, sprite);
   sfTexture_updateFromPixels(texture, framebuffer->pixels, framebuffer->width, framebuffer->height, 0, 0);
   sfSprite_destroy(sprite);
   sfTexture_destroy(texture);
