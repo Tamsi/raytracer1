@@ -63,10 +63,21 @@ float intersect_sphere(sfVector3f eye_pos, sfVector3f dir_vector, float radius)
   return (res);
 }
 
+float intersect_plan(sfVector3f eye_pos, sfVector3f dir_vector)
+{
+  float k;
+
+  if (dir_vector.z == 0)
+    return (-1);
+  k = (-(eye_pos.z + 25) / dir_vector.z);
+  return (k);
+}
+
 void raytrace_scene(t_my_framebuffer *framebuffer)
 {
   float radius;
   float distance;
+  float plan;
   sfVector3f eye_pos;
   sfVector3f direction;
   sfVector2i screenSize;
@@ -88,7 +99,10 @@ void raytrace_scene(t_my_framebuffer *framebuffer)
     {
       direction = raytrace(screenSize, screenPos);
       distance = intersect_sphere(eye_pos, direction, radius);
-      if (distance > 0.0)
+      plan = intersect_plan(eye_pos, direction);
+      if (plan > 0.0)
+        my_put_pixel(framebuffer, screenPos.x, screenPos.y, sfBlue);
+      else if (distance > 0.0)
         my_put_pixel(framebuffer, screenPos.x, screenPos.y, sfRed);
       screenPos.x++;
     }
