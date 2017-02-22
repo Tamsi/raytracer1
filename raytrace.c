@@ -86,7 +86,7 @@ void raytrace_scene(t_my_framebuffer *framebuffer)
   eye_pos.x = -200;
   eye_pos.y = 0;
   eye_pos.z = 0;
-  radius = 50.0;
+  radius = 30.0;
 
   screenSize.x = framebuffer->width;
   screenSize.y = framebuffer->height;
@@ -104,6 +104,13 @@ void raytrace_scene(t_my_framebuffer *framebuffer)
         my_put_pixel(framebuffer, screenPos.x, screenPos.y, sfBlue);
       else if (distance > 0.0)
         my_put_pixel(framebuffer, screenPos.x, screenPos.y, sfRed);
+      if (plan > 0.0 && distance > 0.0)
+      {
+        if (plan < distance)
+          my_put_pixel(framebuffer, screenPos.x, screenPos.y, sfBlue);
+        else
+          my_put_pixel(framebuffer, screenPos.x, screenPos.y, sfRed);
+      }
       screenPos.x++;
     }
     screenPos.y++;
